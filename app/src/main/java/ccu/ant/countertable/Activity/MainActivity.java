@@ -32,22 +32,24 @@ public class MainActivity extends AppCompatActivity implements OnHeadlineSelecte
 
     RecyclerView mList ;
     //Fragment
-    ViewPager mPager;
+    public static ViewPager mPager;
     FrgPagerAdapter mPagerAdapter;
-    private List<DummyItem> sItem = new ArrayList<DummyItem>();
-    private int number = 1;
+    public static List<DummyItem> sItem = new ArrayList<DummyItem>();
+    public static int NOW_POS;
+    private int number = 0;
     private Handler handler=new Handler();
     private Runnable runnable=new Runnable(){
         @Override
         public void run() {
             // TODO Auto-generated method stub
-            //到時候在這裡檢查資料庫是否有更新資料
-            sItem.add(new DummyItem(number,"陳先生","拿鐵咖啡","100","去冰半糖","take out","2"));
+            //
             number++;
+            sItem.add(new DummyItem(number,"陳\n先生","拿鐵咖啡","100","去冰半糖","take out","2"));
             //把上面的List放進左邊RecycleView列表
-            mList.setAdapter(new SampleAdapter(MainActivity.this,sItem));
-            mList.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+
+            mList.getAdapter().notifyDataSetChanged();
             mPager.getAdapter().notifyDataSetChanged();
+
             //initViewPager();
             Log.e("handler","ok!");
             handler.postDelayed(this, 10000);
@@ -63,6 +65,8 @@ public class MainActivity extends AppCompatActivity implements OnHeadlineSelecte
         mPager = (ViewPager) findViewById(R.id.main_FragmentPager);
 
         //監聽時間變化
+        mList.setAdapter(new SampleAdapter(MainActivity.this,sItem));
+        mList.setLayoutManager(new LinearLayoutManager(MainActivity.this));
         handler.postDelayed(runnable, 2000);
 
         //初始化右邊滑動的Fragment
@@ -75,38 +79,42 @@ public class MainActivity extends AppCompatActivity implements OnHeadlineSelecte
         List<Fragment> fragments = DummyItem.fragments;
         mPagerAdapter = new FrgPagerAdapter(getSupportFragmentManager(), fragments);
         mPager.setAdapter(mPagerAdapter);
+        mPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+            @Override
+            public void onPageSelected(int position) {
+                NOW_POS = position;
+                mPager.getAdapter().notifyDataSetChanged();
+                mList.getAdapter().notifyDataSetChanged();
+            }
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
     }
     //===================================================
 
     //實作從Fragment回傳的動作
     @Override
-    public void onaitemSelected(int data_int) {
-        Log.e("test:", "success! " + data_int);
-        int orderArrIndex = data_int;
-        //search
-        for(int i = 0;i < sItem.size();i++){
-            if(sItem.get(i).number-1 == data_int){
-                orderArrIndex = i;
-                Log.e("orderArrIndex:",""+orderArrIndex);
-                break;
-            }
-        }
-        Log.e("flags:","1");
-        //Log.e("get:",""+orderArr.get(data_int));
+    public void onRemoveSelected(int orderArrIndex) {
         //
         if(sItem.size() > 1) {
             /*if (DummyItem.fragments.listIterator(data_int).next() != null)
                 mPager.setCurrentItem(data_int + 1);*/
-            if(sItem.listIterator(orderArrIndex).next() != null) {
-
+            //if(sItem.get(sItem.size()) != null) {
+                //刪除左邊List的選項
+                if(orderArrIndex == sItem.size()-1) mPager.setCurrentItem(orderArrIndex-1);
+                sItem.remove(orderArrIndex);
                 //mPager.setCurrentItem(data_int + 1);
                 //刪除右邊fragments
                 DummyItem.fragments.remove(orderArrIndex);
-                mPagerAdapter.notifyDataSetChanged();
+                mPager.getAdapter().notifyDataSetChanged();
                 Log.e("flags:","2");
-                //刪除左邊List的選項
-                sItem.remove(orderArrIndex);
-                mList.getAdapter().notifyItemRemoved(orderArrIndex);
+
+                //mList.getAdapter().notifyItemRemoved(orderArrIndex);
+                mList.getAdapter().notifyDataSetChanged();
 
                 Log.e("flags:","3");
 
@@ -114,8 +122,14 @@ public class MainActivity extends AppCompatActivity implements OnHeadlineSelecte
                 Log.e("fragments.size", "" + DummyItem.fragments.size());
                 //Log.e("fragments_ID",""+DummyItem.fragments.);
                 Log.e("debug:", DummyItem.fragments.toString());
-            }
         }
+    }
 
+    @Override
+    public void onAddSelected(){
+        number++;
+        sItem.add(new DummyItem(number,"柴\n先生","拿鐵咖啡,麵包","100","去冰半糖","take out","3"));
+        mList.getAdapter().notifyDataSetChanged();
+        mPager.getAdapter().notifyDataSetChanged();
     }
 }

@@ -36,8 +36,29 @@
         app:layout_anchor="@+id/item_detail_container"
         app:layout_anchorGravity="top|end"
         android:layout_above="@+id/master_add"
-        android:layout_alignLeft="@+id/master_add"
-        android:layout_alignStart="@+id/master_add"
-        android:layout_marginBottom="21dp" />
+        android:layout_toRightOf="@+id/updatebut"
+        android:layout_toEndOf="@+id/updatebut" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/updatebut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|start"
+        android:src="@android:drawable/ic_menu_edit"
+        app:layout_anchor="@+id/item_detail_container"
+        app:layout_anchorGravity="top|end"
+        android:layout_below="@+id/delbut"
+        android:layout_toLeftOf="@+id/master_add"
+        android:layout_toStartOf="@+id/master_add" />
+
+    <ImageView
+        android:layout_width="400dp"
+        android:layout_height="400dp"
+        android:id="@+id/imageView"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="53dp"
+        android:layout_marginStart="53dp" />
 
 </RelativeLayout>

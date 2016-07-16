@@ -48,6 +48,7 @@ public class SampleAdapter extends RecyclerView.Adapter<SampleAdapter.ViewHolder
             Log.e("CLick","click" + getLayoutPosition());
             //滑到對應的 Fragment
             ((ViewPager)((MainActivity)mContext).findViewById(R.id.main_FragmentPager)).setCurrentItem(getLayoutPosition());
+            MainActivity.NOW_POS=getLayoutPosition();
         }
     }
 

@@ -7,6 +7,6 @@ public interface OnHeadlineSelectedListener {
      * Called by HeadlinesFragment when a item is selected
      */
 //這裡可以設定傳遞的資料型態
-    public void onaitemSelected(int data_int);
-
+    public void onRemoveSelected(int data_int);
+    public void onAddSelected();
 }

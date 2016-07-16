@@ -22,6 +22,7 @@ public class DummyItem {
     private String take_number;
     private String request;
     private String name;
+    private String pic_url;
 
     //DummyItem對應的 Fragment 列表 (新增左邊選項時一起新增右邊頁面)
     public static List<Fragment> fragments = new ArrayList<>();
@@ -44,16 +45,83 @@ public class DummyItem {
     }
 
 
-    public int getNumber(){ return number; }
-
-    public String getName() {
-        return name;
+    public int getNumber() {
+        return number;
     }
 
-    public String getPlace(){ return place; }
+    public void setNumber(int number) {
+        this.number = number;
+    }
 
     public String getId() {
         return id;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getOrders() {
+        return orders;
+    }
+
+    public void setOrders(String orders) {
+        this.orders = orders;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public String getPlace() {
+        return place;
+    }
+
+    public void setPlace(String place) {
+        this.place = place;
+    }
+
+    public String getTake_number() {
+        return take_number;
+    }
+
+    public void setTake_number(String take_number) {
+        this.take_number = take_number;
+    }
+
+    public String getRequest() {
+        return request;
+    }
+
+    public void setRequest(String request) {
+        this.request = request;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public static List<Fragment> getFragments() {
+        return fragments;
+    }
+
+    public static void setFragments(List<Fragment> fragments) {
+        DummyItem.fragments = fragments;
+    }
+
+    public String getPic_url() {
+        return pic_url;
+    }
+
+    public void setPic_url(String pic_url) {
+        this.pic_url = pic_url;
+    }
 }
