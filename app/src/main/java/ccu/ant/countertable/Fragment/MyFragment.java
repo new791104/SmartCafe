@@ -11,6 +11,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.os.UserManagerCompat;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,11 +29,13 @@ import com.zhy.http.okhttp.request.RequestCall;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-import ccu.ant.countertable.Activity.MainActivity;
+import ccu.ant.countertable.Global.GV;
 import ccu.ant.countertable.Item.Car;
-import ccu.ant.countertable.Item.DummyItem;
+import ccu.ant.countertable.Objects.ProductItem;
+import ccu.ant.countertable.Objects.ShoppingItem;
 import ccu.ant.countertable.R;
 import okhttp3.Call;
 
@@ -43,32 +46,49 @@ public class MyFragment extends Fragment implements View.OnClickListener {
 
     //物件
     private TextView mIndexText;
+    private TextView sUserInfo;
+    private TextView sOrderNumber;
     private ImageView mImageView;
     //傳遞過來的值
-    private int Frag_Number;
-    private String Frag_Name ;
-    private String Frag_Orders ;
-    private String Frag_Price ;
-    private String Frag_Request ;
-    private String Frag_Place ;
-    private String Frag_Take_Number ;
+    private int frag_number;
+    private int frag_sid;
+    private String frag_uname;
+    private String frag_uemail;
+    private String frag_upic;
+    private int frag_items_size;
+    private String[] frag_items_name;
+    private String frag_sdate;
+    private int frag_talprice;
+    private int frag_tabNumber;
+    private boolean frag_iscoupon;
+    private String[] frag_couponid;
+
     //與Activity溝通用
     OnHeadlineSelectedListener mCallback;
-
+    //Fragment裡面的List，用來顯示餐點項目
+    private RecyclerView sList;
 
     //初始化時傳進來的參數
-    public static final MyFragment newInstance(int num, String name, String orders, String price, String request, String place, String take_number){
+    public static final MyFragment newInstance(int num, int sid, String uname, String uemail, String upic, ProductItem[] items, Date sdate, int talprice, int tabnum, boolean iscoupon, String[] couponid){
         MyFragment f = new MyFragment();
-
         Bundle bd = new Bundle();
+        int i;
 
-        bd.putInt("User_Number", num);
-        bd.putString("User_Name", name);
-        bd.putString("Orders", orders);
-        bd.putString("Price", price);
-        bd.putString("Request", request);
-        bd.putString("Place", place);
-        bd.putString("Take_Number", take_number);
+        bd.putInt("Order_Number", num);
+        bd.putInt("User_sid", sid);
+        bd.putString("User_Name", uname);
+        bd.putString("User_Email", uemail);
+        bd.putString("User_Pic", upic);
+        for(i = 0;i < items.length;i++)
+            bd.putString("Order_Name" + i, items[i].getpName());
+        bd.putInt("Order_size", i);
+        bd.putString("Date", sdate.toString());
+        bd.putInt("talPrice", talprice);
+        bd.putInt("tabNumber", tabnum);
+        bd.putBoolean("isCoupon", iscoupon);
+        bd.putStringArray("CouponId", couponid);
+
+
         f.setArguments(bd);
         return f;
     }
@@ -90,13 +110,23 @@ public class MyFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Frag_Number = getArguments().getInt("User_Number");
-        Frag_Name = getArguments().getString("User_Name");
-        Frag_Orders = getArguments().getString("Order");
-        Frag_Price = getArguments().getString("Price");
-        Frag_Request = getArguments().getString("Request");
-        Frag_Place = getArguments().getString("Place");
-        Frag_Take_Number = getArguments().getString("Take_Number");
+        int i;
+        frag_number = getArguments().getInt("Order_Number");
+        frag_sid = getArguments().getInt("Usr_sid");
+        frag_uname = getArguments().getString("User_Name");
+        frag_uemail = getArguments().getString("User_Email");
+        frag_upic = getArguments().getString("User_Pic");
+        frag_items_size = getArguments().getInt("Order_size");
+
+        frag_items_name = new String[frag_items_size];
+        for(i = 0;i < frag_items_size;i++)
+            frag_items_name[i] = getArguments().getString("Order_Name" + i);
+
+        frag_talprice = getArguments().getInt("User_talPrice");
+        frag_tabNumber = getArguments().getInt("tabNumber");
+        frag_iscoupon = getArguments().getBoolean("isCoupon");
+        frag_couponid = getArguments().getStringArray("CouponId");
+
     }
 
     @Override
@@ -110,44 +140,23 @@ public class MyFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        DummyItem DItem = MainActivity.sItem.get(MainActivity.NOW_POS);
+        ShoppingItem DItem = GV.sItem.get(GV.NOW_POS);
+        String Place = DItem.getTabNumber() == 0 ? "外帶" : "內用" + DItem.getTabNumber();
         mContext = view.getContext();
+
         //---畫面物件初始化---
-        mIndexText = (TextView) view.findViewById(R.id.Fragment_text);
-        mIndexText.setText(
-                DItem.getId()+"/"+ DItem.getPrice());
+        sUserInfo = (TextView) view.findViewById(R.id.Fragment_User_Detail);
+        sUserInfo.setText(DItem.getsUserName());
+        sOrderNumber = (TextView) view.findViewById(R.id.Fragment_User_No);
+        sOrderNumber.setText("Number: " + DItem.getNumber()
+                             + "\nsid: " + DItem.getsID()
+                             + "\nPlace: " + Place);
 
         //圖片初始化
-        mImageView = (ImageView) view.findViewById(R.id.imageView);
-        Glide.with(getActivity()).load(DItem.getPic_url()).asBitmap().centerCrop().placeholder(R.drawable.sample_footer_loading_progress).into(mImageView);
-
-        FloatingActionButton delbut = (FloatingActionButton) getView().findViewById(R.id.delbut);
-        delbut.setOnClickListener(new Button.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                Log.e("test: ", "button success!");
-                if(!DummyItem.fragments.isEmpty()) {
-                    //Log.e("number: ", DummyItem.fragments.get(User_Number-1).toString());
-                    mCallback.onRemoveSelected(MainActivity.NOW_POS);
-                }
-            }
-        });
-        FloatingActionButton master_add = (FloatingActionButton) getView().findViewById(R.id.master_add);
-        master_add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Loading...", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                if(!DummyItem.fragments.isEmpty()) {
-                    //Log.e("number: ", DummyItem.fragments.get(User_Number-1).toString());
-                    mCallback.onAddSelected();
-                }
-            }
-        });
-
-        /**************************/
-        FloatingActionButton master_update = (FloatingActionButton) getView().findViewById(R.id.updatebut);
-        master_update.setOnClickListener(this);
+        mImageView = (ImageView) view.findViewById(R.id.Fragment_User_pic);
+        //Glide.with(getActivity()).load(DItem.getuPic_url()).asBitmap().centerCrop().placeholder(R.drawable.sample_footer_loading_progress).into(mImageView);
+        //載入使用者圖片
+        Glide.with(getActivity()).load(DItem.getuPic_url()).asBitmap().centerCrop().into(mImageView);
 
     }
 
@@ -155,47 +164,18 @@ public class MyFragment extends Fragment implements View.OnClickListener {
     //點擊事件
     @Override
     public void onClick(View v) {
+        ButAct butact = new ButAct();
         switch (v.getId()){
             case R.id.updatebut:
-
-                OkHttpUtils
-                        .post()
-                        .url("http://www.taiwanbus.tw/app_api/SP_PredictionTime2.ashx")
-                        .addParams("routeNo","7304")
-                        .addParams("branch","0")
-                        .addParams("goBack","1")
-                        .addParams("Lang","")
-                        .addParams("Source","m")
-                        .build()
-                        .execute(new StringCallback() {
-                                @Override
-                                public void onError(Call call, Exception e) {
-
-                                }
-
-                                @Override
-                                public void onResponse(String response) {
-
-                                    String JSON = response;
-                                    List<Car> mCar  =  new Gson().fromJson(JSON,new TypeToken<List<Car>>(){}.getType());
-
-                                    //更新內容
-                                    MainActivity.sItem.get(MainActivity.NOW_POS).setPrice(mCar.get(MainActivity.NOW_POS).getName());
-
-                                    //mIndexText.setText(response);
-                                    //載入圖片
-                                    MainActivity.sItem.get(MainActivity.NOW_POS).setPic_url("http://imgur.com/gxqSAwJ.jpg");
-
-
-
-                                    MainActivity.mPager.getAdapter().notifyDataSetChanged();
-
-                                }
-                        });
+                butact.update();
                 break;
-
+            case R.id.delbut:
+                butact.remove(GV.NOW_POS);
+                break;
+            case R.id.master_add:
+                butact.add(v);
+                break;
         }
-
     }
 
 }

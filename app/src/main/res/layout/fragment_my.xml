@@ -1,5 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="#8B4513"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -7,58 +9,76 @@
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="100px"
+        android:layout_height="200px"
+        android:background="#E6E6FA"
         android:text="@string/hello_blank_fragment"
-        android:id="@+id/Fragment_text"/>
+        android:id="@+id/Fragment_User_Detail"
+        android:layout_alignTop="@+id/Fragment_User_pic"
+        android:layout_toRightOf="@+id/Fragment_User_pic"
+        android:layout_toEndOf="@+id/Fragment_User_pic" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/master_add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical|start"
-        android:src="@android:drawable/ic_input_add"
-        app:layout_anchor="@+id/item_detail_container"
-        app:layout_anchorGravity="top|end"
-        android:layout_marginRight="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="35dp" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/delbut"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical|start"
-        android:src="@android:drawable/ic_delete"
-        app:layout_anchor="@+id/item_detail_container"
-        app:layout_anchorGravity="top|end"
-        android:layout_above="@+id/master_add"
-        android:layout_toRightOf="@+id/updatebut"
-        android:layout_toEndOf="@+id/updatebut" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/updatebut"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical|start"
-        android:src="@android:drawable/ic_menu_edit"
-        app:layout_anchor="@+id/item_detail_container"
-        app:layout_anchorGravity="top|end"
-        android:layout_below="@+id/delbut"
-        android:layout_toLeftOf="@+id/master_add"
-        android:layout_toStartOf="@+id/master_add" />
 
     <ImageView
-        android:layout_width="400dp"
-        android:layout_height="400dp"
-        android:id="@+id/imageView"
-        android:layout_centerVertical="true"
+        android:layout_width="150px"
+        android:layout_height="200px"
+        android:id="@+id/Fragment_User_pic"
+        android:background="#7B68EE"
+        android:layout_marginLeft="37px"
+        android:layout_marginStart="37px"
+        android:layout_marginTop="37px"
+        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="53dp"
-        android:layout_marginStart="53dp" />
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="250px"
+        android:layout_height="200px"
+        android:background="#D8BFD8"
+        android:text="@string/hello_blank_fragment"
+        android:id="@+id/Fragment_User_No"
+        android:layout_below="@+id/Fragment_User_pic"
+        android:layout_alignLeft="@+id/Fragment_User_pic"
+        android:layout_alignStart="@+id/Fragment_User_pic" />
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="1000px"
+        android:layout_height="400px"
+        android:id="@+id/Orders_RecyclerView"
+        android:layout_alignTop="@+id/Fragment_User_Detail"
+        android:layout_toRightOf="@+id/Fragment_User_Detail"
+        android:layout_toEndOf="@+id/Fragment_User_Detail" />
+
+    <TextView
+        android:layout_width="300px"
+        android:layout_height="200px"
+        android:background="#FFFACD"
+        android:text="@string/hello_blank_fragment"
+        android:id="@+id/Fragment_User_Coupon"
+        android:layout_below="@+id/Fragment_User_No"
+        android:layout_alignLeft="@+id/Fragment_User_No"
+        android:layout_alignStart="@+id/Fragment_User_No" />
+
+    <TextView
+        android:layout_width="300px"
+        android:layout_height="200px"
+        android:background="#F5DEB3"
+        android:text="@string/hello_blank_fragment"
+        android:id="@+id/Fragment_User_Prcie"
+        android:layout_alignTop="@+id/Fragment_User_Coupon"
+        android:layout_toRightOf="@+id/Fragment_User_Coupon"
+        android:layout_toEndOf="@+id/Fragment_User_Coupon" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/FinishButton"
+        android:src="@drawable/done"
+        android:layout_alignBottom="@+id/Fragment_User_Prcie"
+        android:layout_alignRight="@+id/Orders_RecyclerView"
+        android:layout_alignEnd="@+id/Orders_RecyclerView"
+        android:layout_marginRight="126dp"
+        android:layout_marginEnd="126dp" />
 
 </RelativeLayout>

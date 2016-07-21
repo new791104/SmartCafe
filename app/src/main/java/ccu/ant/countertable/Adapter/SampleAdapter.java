@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
@@ -20,7 +21,8 @@ import java.util.List;
 
 import ccu.ant.countertable.Activity.MainActivity;
 import ccu.ant.countertable.Fragment.MyFragment;
-import ccu.ant.countertable.Item.DummyItem;
+import ccu.ant.countertable.Global.GV;
+import ccu.ant.countertable.Objects.ShoppingItem;
 import ccu.ant.countertable.R;
 
 /**
@@ -28,7 +30,6 @@ import ccu.ant.countertable.R;
  * TODO 這是左邊 RecycleView 的 Adapter
  */
 public class SampleAdapter extends RecyclerView.Adapter<SampleAdapter.ViewHolder> {
-
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -44,27 +45,33 @@ public class SampleAdapter extends RecyclerView.Adapter<SampleAdapter.ViewHolder
 
         @Override
         public void onClick(View v) {
+            int position = getLayoutPosition();
+            GV.NOW_POS = position;
             //點擊列表
             Log.e("CLick","click" + getLayoutPosition());
+
+            //點擊改變顏色
+            GV.mList.getAdapter().notifyDataSetChanged();
+
             //滑到對應的 Fragment
-            ((ViewPager)((MainActivity)mContext).findViewById(R.id.main_FragmentPager)).setCurrentItem(getLayoutPosition());
-            MainActivity.NOW_POS=getLayoutPosition();
+            ((ViewPager)((MainActivity)mContext).findViewById(R.id.main_FragmentPager)).setCurrentItem(position);
+
         }
     }
 
     //View holder code
 
-    private List<DummyItem> mDummyItem;
+    private List<ShoppingItem> mShoppingItem;
     private static Context mContext;
 
-    public SampleAdapter(Context context,List<DummyItem> di){
-        mDummyItem = di;
+    public SampleAdapter(Context context,List<ShoppingItem> di){
+        mShoppingItem = di;
         mContext = context;
     }
 
     @Override
     public int getItemCount() {
-        return mDummyItem.size();
+        return mShoppingItem.size();
     }
 
     @Override
@@ -77,13 +84,22 @@ public class SampleAdapter extends RecyclerView.Adapter<SampleAdapter.ViewHolder
         return viewHolder;
     }
 
+    //BindViewHolder設定顯示在List上的資料
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
-        DummyItem dItem = mDummyItem.get(position);
+        ShoppingItem dItem = mShoppingItem.get(position);
         TextView nameTextView = viewHolder.nameTextView;
         TextView contentTextView = viewHolder.contentTextView;
-        nameTextView.setText(dItem.getId());
-        contentTextView.setText(dItem.getName());
+        //設置List Text
+        nameTextView.setText(String.valueOf(dItem.getNumber()));
+        contentTextView.setText(dItem.getsUserName());
+
+        if(position == GV.NOW_POS){
+            viewHolder.itemView.setBackgroundColor(Color.parseColor("#8B4513"));
+        }
+        else{
+            viewHolder.itemView.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
 
     }
 
