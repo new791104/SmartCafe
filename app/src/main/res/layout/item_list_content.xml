@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="230px"
     android:layout_height="wrap_content"
-    android:background="#FFFFFF"
+    android:background="#F5DEB3"
     android:orientation="horizontal">
 
     <TextView
@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/text_margin"
         android:text="ID"
-        android:textSize="12dp"
+        android:textSize="24dp"
         android:textAppearance="?attr/textAppearanceListItem" />
 
     <TextView
@@ -20,6 +20,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/text_margin"
         android:text="Content"
-        android:textSize="12dp"
+        android:textSize="24dp"
         android:textAppearance="?attr/textAppearanceListItem" />
 </LinearLayout>

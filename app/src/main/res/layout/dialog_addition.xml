@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="800px"
+    android:layout_height="match_parent"
+    >
+
+    <ImageButton
+        android:src="@drawable/meal"
+        android:layout_width="256px"
+        android:layout_height="256px"
+        android:id="@+id/dialog_imageBut_meal"
+        android:layout_gravity="right|center_vertical"
+        android:layout_alignTop="@+id/dialog_imageBut_pastry"
+        android:layout_toRightOf="@+id/dialog_imageBut_pastry"
+        android:layout_toEndOf="@+id/dialog_imageBut_pastry" />
+
+    <ImageButton
+        android:src="@drawable/drink"
+        android:layout_width="256px"
+        android:layout_height="256px"
+        android:id="@+id/dialog_imageBut_drink"
+        android:layout_gravity="right|top"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/dialog_imageBut_coffee"
+        android:layout_toEndOf="@+id/dialog_imageBut_coffee" />
+
+    <ImageButton
+        android:src="@drawable/coffee"
+        android:layout_width="256px"
+        android:layout_height="256px"
+        android:id="@+id/dialog_imageBut_coffee"
+        android:layout_gravity="left|top"
+        android:layout_marginLeft="30px"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <ImageButton
+        android:src="@drawable/pastry"
+        android:layout_width="256px"
+        android:layout_height="256px"
+        android:layout_marginLeft="30px"
+        android:id="@+id/dialog_imageBut_pastry"
+        android:layout_gravity="left|center_vertical"
+        android:layout_below="@+id/dialog_imageBut_coffee"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+
+</RelativeLayout>

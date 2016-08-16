@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "ccu.ant.countertable"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
@@ -34,4 +34,9 @@ dependencies {
     compile 'com.zhy:okhttputils:2.4.1'
     compile 'com.google.code.gson:gson:2.3.1'
     compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.getbase:floatingactionbutton:1.10.1'
+    compile 'com.github.alexkolpa:floating-action-button-toolbar:0.5.1'
+    compile 'me.himanshusoni.quantityview:quantity-view:1.1.5'
+    compile 'me.kaelaela:verticalviewpager:1.0.0@aar'
+    compile 'com.yanzhenjie:recyclerview-swipe:1.0.0'
 }

@@ -1,17 +1,17 @@
 package ccu.ant.countertable.Objects;
 
-import com.chad.library.adapter.base.entity.SectionEntity;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Egoist on 2016/7/8.
  * TODO 產品object
  */
 public class ProductItem {
+
+    //櫃台APP
+    public boolean isFinish = false;
+    //
 
     public static final String[] SpeciesTW = {
             "小杯","中杯","大杯","特大杯" //0,1,2,3
@@ -67,11 +67,12 @@ public class ProductItem {
         return "沒有供餐時段";
     }
 
-    public int pId;         //產品ID
-    public String pName;    //產品名稱  TODO
-    public String pEngName; //產品英文名稱    TODO
+
+    public String pType;         //產品屬性("coffee,drink,pastry,meal")
+    public String pName;    //產品名稱
+    public String pEngName; //產品英文名稱
     public String pDescirption;//產品描述
-    public int pPrice;         //產品價格    TODO
+    public int pPrice;         //產品價格
     public int pCafeine_Heat;  //產品咖啡因 or 熱量
     public String pNews;       //產品優惠 or 新聞
     public boolean pIsNew;     //是否為新產品
@@ -84,17 +85,21 @@ public class ProductItem {
     public boolean hasSize;    //是否有尺寸(大中小)
     public boolean hasXLSize;  //是否有特大尺寸
     //shopping car 會用到的部分
-    public int sPCS;    //單品購買數量    TODO
-    public String sTag; //單品備註 (濃度 冰塊 糖分 奶量) [大杯;三倍糖;三倍冰;] TODO
+    public int sPCS = 1;    //單品購買數量
+    public String sTag = ""; //單品備註 (濃度 冰塊 糖分 奶量) [大杯;三倍糖;三倍冰;]
 
 
-    public ProductItem(int pId, String pName, String pEngName, String pDescirption, int pPrice, int pCafeine_Heat, String pNews, boolean pIsNew, String pImageUrl, int pSupplyTime, boolean hasEspresso, boolean hasIce, boolean hasSugar, boolean hasMilk, boolean hasSize, boolean hasXLSize) {
-        this.pId = pId;
+    public ProductItem(String pName, String pEngName, String stag, int pPrice, int spcs, String pDescirption) {
+
         this.pName = pName;
         this.pEngName = pEngName;
-        this.pDescirption = pDescirption;
+        this.sTag = stag;
         this.pPrice = pPrice;
-        this.pCafeine_Heat = pCafeine_Heat;
+        this.sPCS = spcs;
+        this.pDescirption = pDescirption;
+
+        /*
+        this.pId = pId;
         this.pNews = pNews;
         this.pIsNew = pIsNew;
         this.pImageUrl = pImageUrl;
@@ -105,6 +110,8 @@ public class ProductItem {
         this.hasMilk = hasMilk;
         this.hasSize = hasSize;
         this.hasXLSize = hasXLSize;
+        */
+
     }
 
     public int getpSupplyTime() {
@@ -147,12 +154,12 @@ public class ProductItem {
         this.pEngName = pEngName;
     }
 
-    public int getpId() {
-        return pId;
+    public String getpType() {
+        return pType;
     }
 
-    public void setpId(int pId) {
-        this.pId = pId;
+    public void setpType(String pType) {
+        this.pType = pType;
     }
 
     public boolean ispIsNew() {
@@ -254,7 +261,7 @@ public class ProductItem {
     @Override
     public String toString() {
         return "ProductItem{" +
-                "pId=" + pId +
+                "pType='" + pType + '\'' +
                 ", pName='" + pName + '\'' +
                 ", pEngName='" + pEngName + '\'' +
                 ", pDescirption='" + pDescirption + '\'' +
@@ -270,6 +277,8 @@ public class ProductItem {
                 ", hasMilk=" + hasMilk +
                 ", hasSize=" + hasSize +
                 ", hasXLSize=" + hasXLSize +
+                ", sPCS=" + sPCS +
+                ", sTag='" + sTag + '\'' +
                 '}';
     }
 }

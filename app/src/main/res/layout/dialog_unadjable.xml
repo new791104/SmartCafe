@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="800px"
+    android:layout_height="match_parent"
+    >
+
+    <TextView
+        android:layout_width="100px"
+        android:layout_height="50px"
+        android:textSize="24dp"
+        android:text="coffee:"
+        android:id="@+id/dialog_textView_unadjType"
+
+        android:layout_below="@+id/imageView2"
+        android:layout_toRightOf="@+id/imageView4"
+        android:layout_toEndOf="@+id/imageView4" />
+
+    <Spinner
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:id="@+id/spinner_type"
+        android:layout_alignBottom="@+id/dialog_textView_unadjType"
+        android:layout_toRightOf="@+id/dialog_textView_unadjType"
+        android:layout_toEndOf="@+id/dialog_textView_unadjType" />
+
+    <me.himanshusoni.quantityview.QuantityView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/dialog_menu_quantityView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:qv_quantity="1"
+        android:layout_alignTop="@+id/dialog_textView_quantity"
+        android:layout_toRightOf="@+id/dialog_textView_quantity"
+        android:layout_toEndOf="@+id/dialog_textView_quantity" />
+
+    <TextView
+        android:layout_width="100px"
+        android:layout_height="50px"
+        android:textSize="24dp"
+        android:text="數量:"
+        android:id="@+id/dialog_textView_quantity"
+
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/imageView"
+        android:layout_toEndOf="@+id/imageView" />
+
+    <ImageView
+        android:layout_width="100px"
+        android:layout_height="20px"
+        android:background="#FFFFFF"
+        android:id="@+id/imageView2"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:layout_width="20px"
+        android:layout_height="100px"
+        android:background="#FFFFFF"
+        android:id="@+id/imageView4"
+        android:layout_below="@+id/imageView2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:layout_width="20px"
+        android:layout_height="100px"
+        android:background="#FFFFFF"
+        android:id="@+id/imageView"
+        android:layout_alignTop="@+id/spinner_type"
+        android:layout_toRightOf="@+id/spinner_type"
+        android:layout_toEndOf="@+id/spinner_type"
+        android:layout_marginLeft="52dp"
+        android:layout_marginStart="52dp" />
+
+    <ImageView
+        android:layout_width="20px"
+        android:layout_height="100px"
+        android:background="#FFFFFF"
+        android:id="@+id/imageView3"
+        android:layout_alignTop="@+id/imageView"
+        android:layout_toRightOf="@+id/dialog_menu_quantityView"
+        android:layout_toEndOf="@+id/dialog_menu_quantityView" />
+
+
+</RelativeLayout>

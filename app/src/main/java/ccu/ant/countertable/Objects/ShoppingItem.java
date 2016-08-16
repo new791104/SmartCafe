@@ -14,65 +14,43 @@ import ccu.ant.countertable.Fragment.MyFragment;
  */
 public class ShoppingItem {
     //櫃台APP自訂的參數
-    private int Number;
-    private int talPrice;
-    private String uPic_url;
-    private int tabNumber;
+    private int Number = 0;
+    public int finishing = 0;
+    public boolean isDone = false;
     //
+    private int sTabNumber;
 
-    private int sID;        //購物單號 (日期混時間，作為該次購物的單號，確認前的購物項目皆用同一組)
-    private String sUserName;
-    private String sUserEmail;         //消費者Email
-    private ProductItem[] sProductItem;//單品Item (TODO + 購買數量、單品備註)
-    private Date sDate;     //下訂日期
+    public String _id;        //購物單號　hash
+    public String sUserEmail;         //消費者Email
+    public ArrayList<ProductItem> sProductItem = new ArrayList<>();//單品Item (TODO + 購買數量、單品備註)
+    public Date sDate;     //下訂日期
 
-    private boolean sIsCoupon;   //是否使用優惠卷
-    private String[]  sCouponID; //優惠卷 ID
+    public boolean sIsCoupon;   //是否使用優惠卷
+    ArrayList<CouponItem> sCoupon = new ArrayList<>(); //優惠卷
 
     //DummyItem對應的 Fragment 列表 (新增左邊選項時一起新增右邊頁面)
     public static List<Fragment> fragments = new ArrayList<>();
 
+    public ShoppingItem(int Number,String _id, String sUserEmail, int sTabNumber,ArrayList<ProductItem> sProductItem, Date sDate, boolean sIsCoupon, ArrayList<CouponItem> sCoupon) {
+        this.Number = Number;
+        this._id = _id;
+        this.sUserEmail = sUserEmail;
+        this.sTabNumber = sTabNumber;
+        this.sProductItem = sProductItem;
+        this.sDate = sDate;
+        this.sIsCoupon = sIsCoupon;
+        this.sCoupon = sCoupon;
 
-    public ShoppingItem(int num, int sid, String uname, String uemail, String upic, ProductItem[] items, Date sdate, int talprice, int tabnum, boolean iscoupon, String[] couponid) {
-        setNumber(num);
-        setsID(sid);
-        setsUserName(uname);
-        setsUserEmail(uemail);
-        setuPic_url(upic);
-        setsProductItem(items);
-        setsDate(sdate);
-        setTalPrice(talprice);
-        setTabNumber(tabnum);
-        setsIsCoupon(iscoupon);
-        setsCouponID(couponid);
+        fragments.add(MyFragment.newInstance());
 
-        //與 MyFragment 的接口，newInstance 會實體化並回傳一個 Fragment。
-        //而 fragment 陣列被宣告為static為全域變數
-        fragments.add(MyFragment.newInstance(num, sid, uname, uemail, upic, items, sdate, talprice, tabnum, iscoupon, couponid));
     }
 
-    public int getNumber() {
-        return Number;
+    public String get_id() {
+        return _id;
     }
 
-    public void setNumber(int number) {
-        Number = number;
-    }
-
-    public int getsID() {
-        return sID;
-    }
-
-    public void setsID(int sID) {
-        this.sID = sID;
-    }
-
-    public String getsUserName() {
-        return sUserName;
-    }
-
-    public void setsUserName(String sUserName) {
-        this.sUserName = sUserName;
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
     public String getsUserEmail() {
@@ -83,11 +61,11 @@ public class ShoppingItem {
         this.sUserEmail = sUserEmail;
     }
 
-    public ProductItem[] getsProductItem() {
+    public ArrayList<ProductItem> getsProductItem() {
         return sProductItem;
     }
 
-    public void setsProductItem(ProductItem[] sProductItem) {
+    public void setsProductItem(ArrayList<ProductItem> sProductItem) {
         this.sProductItem = sProductItem;
     }
 
@@ -107,35 +85,47 @@ public class ShoppingItem {
         this.sIsCoupon = sIsCoupon;
     }
 
-    public String[] getsCouponID() {
-        return sCouponID;
+    public ArrayList<CouponItem> getsCoupon() {
+        return sCoupon;
     }
 
-    public void setsCouponID(String[] sCouponID) {
-        this.sCouponID = sCouponID;
+    public void setsCoupon(ArrayList<CouponItem> sCoupon) {
+        this.sCoupon = sCoupon;
     }
 
-    public int getTalPrice() {
-        return talPrice;
+    public boolean isDone() {
+        return isDone;
     }
 
-    public void setTalPrice(int talPrice) {
-        this.talPrice = talPrice;
-    }
-
-    public String getuPic_url() {
-        return uPic_url;
-    }
-
-    public void setuPic_url(String uPic_url) {
-        this.uPic_url = uPic_url;
+    public void setDone(boolean done) {
+        isDone = done;
     }
 
     public int getTabNumber() {
-        return tabNumber;
+        return sTabNumber;
     }
 
     public void setTabNumber(int tabNumber) {
-        this.tabNumber = tabNumber;
+        this.sTabNumber = tabNumber;
+    }
+
+    public int getNumber() {
+        return Number;
+    }
+
+    public void setNumber(int number) {
+        Number = number;
+    }
+
+    @Override
+    public String toString() {
+        return "ShoppingItem{" +
+                "_id='" + _id + '\'' +
+                ", sUserEmail='" + sUserEmail + '\'' +
+                ", sProductItem=" + sProductItem +
+                ", sDate=" + sDate +
+                ", sIsCoupon=" + sIsCoupon +
+                ", sCoupon=" + sCoupon +
+                '}';
     }
 }

@@ -9,14 +9,27 @@
     android:weightSum="1">
 
     <android.support.v7.widget.RecyclerView
-        android:layout_width="95dp"
+        android:layout_width="200dp"
         android:layout_height="match_parent"
+        android:background="#F5DEB3"
         android:id="@+id/main_RecyclerView" />
 
     <!--滑動頁面-->
-    <android.support.v4.view.ViewPager
+    <!--<me.kaelaela.verticalviewpager.VerticalViewPager
         android:id="@+id/main_FragmentPager"
-        android:layout_width="670dp"
+        android:layout_width="match_parent"
+        android:layout_height="353dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/main_RecyclerView"
+        android:layout_toEndOf="@+id/main_RecyclerView" />-->
+
+    <!--非滑動頁面-->
+    <ccu.ant.countertable.Fragment.NonSwipeableViewPager
+        android:id="@+id/main_FragmentPager"
+        android:layout_width="match_parent"
         android:layout_height="353dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
@@ -26,19 +39,33 @@
         android:layout_toEndOf="@+id/main_RecyclerView" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/master_add"
+        android:id="@+id/master_add_but"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical|start"
-        android:src="@android:drawable/ic_input_add"
+        android:src="@drawable/ic_add_white_24dp"
         app:layout_anchor="@+id/item_detail_container"
         app:layout_anchorGravity="top|end"
-        android:layout_marginBottom="69px"
+        android:layout_marginBottom="54dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignRight="@+id/main_FragmentPager"
+        android:layout_alignEnd="@+id/main_FragmentPager"
+        android:layout_marginRight="41dp"
+        android:layout_marginEnd="41dp" />
 
     <android.support.design.widget.FloatingActionButton
+    android:id="@+id/alter_but"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical|start"
+    android:src="@android:drawable/ic_menu_edit"
+
+    app:layout_anchorGravity="top|end"
+    android:layout_marginBottom="60dp"
+        android:layout_above="@+id/master_add_but"
+        android:layout_alignLeft="@+id/master_add_but"
+        android:layout_alignStart="@+id/master_add_but" />
+    <!--<android.support.design.widget.FloatingActionButton
         android:id="@+id/delbut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -46,11 +73,12 @@
         android:src="@android:drawable/ic_delete"
 
         app:layout_anchorGravity="top|end"
+        android:layout_marginBottom="63dp"
         android:layout_above="@+id/master_add"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true" />-->
 
-    <android.support.design.widget.FloatingActionButton
+    <!--<android.support.design.widget.FloatingActionButton
         android:id="@+id/updatebut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -59,7 +87,9 @@
         app:layout_anchor="@+id/item_detail_container"
         app:layout_anchorGravity="top|end"
         android:layout_above="@+id/delbut"
-        android:layout_alignParentRight="true" />
+        android:layout_alignRight="@+id/main_FragmentPager"
+        android:layout_alignEnd="@+id/main_FragmentPager"
+        android:layout_marginBottom="61dp" />-->
 
 
 

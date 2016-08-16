@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="800dp"
+    android:layout_height="wrap_content"
+    android:background="#F5DEB3"
+    android:orientation="horizontal"
+    android:id="@+id/order_content">
+
+    <TextView
+        android:id="@+id/order_name"
+        android:layout_width="150px"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp" android:layout_marginBottom="16dp"
+        android:text="ID"
+        android:textSize="24sp"
+        android:textAppearance="?attr/textAppearanceListItem" />
+
+    <TextView
+        android:id="@+id/order_tag"
+        android:layout_width="500px"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp" android:layout_marginBottom="16dp"
+        android:text="tag"
+        android:textSize="24sp"
+        android:textAppearance="?attr/textAppearanceListItem" />
+
+    <TextView
+        android:id="@+id/order_count"
+        android:layout_width="50px"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp" android:layout_marginBottom="16dp"
+        android:text="count"
+        android:textSize="24sp"
+        android:textAppearance="?attr/textAppearanceListItem" />
+
+    <TextView
+        android:id="@+id/order_price"
+        android:layout_width="50px"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp" android:layout_marginBottom="16dp"
+        android:text="price"
+        android:textSize="24sp"
+        android:textAppearance="?attr/textAppearanceListItem" />
+
+</LinearLayout>

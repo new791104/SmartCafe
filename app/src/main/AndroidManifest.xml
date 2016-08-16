@@ -4,6 +4,8 @@
 
     <!--網路權限-->
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 網路 -->
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"

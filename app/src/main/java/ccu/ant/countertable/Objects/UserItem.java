@@ -1,6 +1,8 @@
 package ccu.ant.countertable.Objects;
 
-/**櫃台系統可能不需要用到
+import java.util.ArrayList;
+
+/**
  * Created by Egoist on 2016/7/18.
  */
 public class UserItem {
@@ -13,7 +15,6 @@ public class UserItem {
     //TODO 以下為進系統後須補齊的需求 (User Data)
     public String uBirthday;  //使用者生日
     public String uImgurl;    //使用者 頭貼 Url
-    public CouponItem[] uCoupon;//使用者
 
     //===============
     public String uJson_News; //新消息
@@ -23,6 +24,13 @@ public class UserItem {
     //public String uTotalCup;//使用者 總消費量 (杯)
     //public String uJson_LikeProduct; //個人收藏的產品(JSON String)
 
+
+    public UserItem(String uName, String uEmail, String uPassword, String uPhone) {
+        this.uName = uName;
+        this.uEmail = uEmail;
+        this.uPassword = uPassword;
+        this.uPhone = uPhone;
+    }
 
     public String getuName() {
         return uName;
@@ -72,13 +80,6 @@ public class UserItem {
         this.uImgurl = uImgurl;
     }
 
-    public CouponItem[] getuCoupon() {
-        return uCoupon;
-    }
-
-    public void setuCoupon(CouponItem[] uCoupon) {
-        this.uCoupon = uCoupon;
-    }
 
     public String getuJson_News() {
         return uJson_News;
@@ -86,5 +87,18 @@ public class UserItem {
 
     public void setuJson_News(String uJson_News) {
         this.uJson_News = uJson_News;
+    }
+
+    @Override
+    public String toString() {
+        return "UserItem{" +
+                "uName='" + uName + '\'' +
+                ", uEmail='" + uEmail + '\'' +
+                ", uPassword='" + uPassword + '\'' +
+                ", uPhone='" + uPhone + '\'' +
+                ", uBirthday='" + uBirthday + '\'' +
+                ", uImgurl='" + uImgurl + '\'' +
+                ", uJson_News='" + uJson_News + '\'' +
+                '}';
     }
 }
