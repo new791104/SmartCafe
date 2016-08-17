@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -162,16 +163,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         delbut.setOnClickListener(this);*/
 
         /*******Add Button********/
-        FloatingActionButton master_add_but = (FloatingActionButton) findViewById(R.id.master_add_but);
-        master_add_but.setOnClickListener(this);
+        /*FloatingActionButton master_add_but = (FloatingActionButton) findViewById(R.id.master_add_but);
+        master_add_but.setOnClickListener(this);*/
 
         /*******Alter Button********/
-        FloatingActionButton alter_but = (FloatingActionButton) findViewById(R.id.alter_but);
-        alter_but.setOnClickListener(this);
+        /*FloatingActionButton alter_but = (FloatingActionButton) findViewById(R.id.alter_but);
+        alter_but.setOnClickListener(this);*/
 
         /********Update Button********/
         /*FloatingActionButton master_update = (FloatingActionButton) findViewById(R.id.updatebut);
         master_update.setOnClickListener(this);*/
+
+        /********Action Button********/
+        com.getbase.floatingactionbutton.FloatingActionButton actfab1 = (com.getbase.floatingactionbutton.FloatingActionButton) findViewById(R.id.actionButton_fab1);
+        com.getbase.floatingactionbutton.FloatingActionButton actfab2 = (com.getbase.floatingactionbutton.FloatingActionButton) findViewById(R.id.actionButton_fab2);
+
+        actfab1.setOnClickListener(this);
+        actfab2.setOnClickListener(this);
     }
 
     @Override
@@ -245,12 +253,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.delbut:
                 butact.remove(GV.NOW_POS);
-                break;*/
+                break;
             case R.id.master_add_but:
                 butact.add(v);
                 break;
             case R.id.alter_but:
                 butact.alter(v);
+                break;*/
+            case R.id.actionButton_fab1:
+                butact.alter(v);
+                break;
+            case R.id.actionButton_fab2:
+                butact.add(v);
                 break;
         }
     }

@@ -38,7 +38,7 @@
         android:layout_toRightOf="@+id/main_RecyclerView"
         android:layout_toEndOf="@+id/main_RecyclerView" />
 
-    <android.support.design.widget.FloatingActionButton
+    <!--<android.support.design.widget.FloatingActionButton
         android:id="@+id/master_add_but"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -51,9 +51,9 @@
         android:layout_alignRight="@+id/main_FragmentPager"
         android:layout_alignEnd="@+id/main_FragmentPager"
         android:layout_marginRight="41dp"
-        android:layout_marginEnd="41dp" />
+        android:layout_marginEnd="41dp" />-->
 
-    <android.support.design.widget.FloatingActionButton
+    <!--<android.support.design.widget.FloatingActionButton
     android:id="@+id/alter_but"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -64,33 +64,42 @@
     android:layout_marginBottom="60dp"
         android:layout_above="@+id/master_add_but"
         android:layout_alignLeft="@+id/master_add_but"
-        android:layout_alignStart="@+id/master_add_but" />
-    <!--<android.support.design.widget.FloatingActionButton
-        android:id="@+id/delbut"
+        android:layout_alignStart="@+id/master_add_but" />-->
+
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/actionButton"
+        android:layout_marginBottom="65px"
+        android:layout_marginRight="50px"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical|start"
-        android:src="@android:drawable/ic_delete"
-
-        app:layout_anchorGravity="top|end"
-        android:layout_marginBottom="63dp"
-        android:layout_above="@+id/master_add"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />-->
-
-    <!--<android.support.design.widget.FloatingActionButton
-        android:id="@+id/updatebut"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical|start"
-        android:src="@android:drawable/ic_menu_edit"
-        app:layout_anchor="@+id/item_detail_container"
-        app:layout_anchorGravity="top|end"
-        android:layout_above="@+id/delbut"
+        app:fab_addButtonColorNormal="#000000"
+        app:fab_addButtonColorPressed="#000000"
+        app:fab_labelStyle="@style/menu_labels_style"
+        android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/main_FragmentPager"
-        android:layout_alignEnd="@+id/main_FragmentPager"
-        android:layout_marginBottom="61dp" />-->
+        android:layout_alignEnd="@+id/main_FragmentPager">
 
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/actionButton_fab1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_menu_edit"
+            app:fab_colorNormal="#000000"
+            app:fab_colorPressed="#FFFFFF"
+            app:fab_title="修改訂單"/>
+
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/actionButton_fab2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_menu_edit"
+            app:fab_colorNormal="#000000"
+            app:fab_colorPressed="#FFFFFF"
+            app:fab_title="新增訂單"/>
+
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
 
 </RelativeLayout>
