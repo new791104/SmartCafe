@@ -10,9 +10,11 @@
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="200dp"
+        android:paddingTop="50px"
         android:layout_height="match_parent"
         android:background="#F5DEB3"
-        android:id="@+id/main_RecyclerView" />
+        android:id="@+id/main_RecyclerView"
+        android:layout_alignParentTop="true" />
 
     <!--滑動頁面-->
     <!--<me.kaelaela.verticalviewpager.VerticalViewPager
@@ -100,6 +102,19 @@
             app:fab_title="新增訂單"/>
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#000000"
+        android:minWidth="200dp"
+        android:minHeight="50dp"
+        android:id="@+id/switchButton"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+
 
 
 </RelativeLayout>

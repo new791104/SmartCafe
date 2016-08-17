@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -12,10 +13,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.jaredrummler.materialspinner.MaterialSpinner;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -38,97 +41,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Network_core nCore;
     FrgPagerAdapter mPagerAdapter;
     String LOG_TAG = "DEBUG";
-    private Handler handler=new Handler();
+    private Handler handler = new Handler();
     private String old_response = new String();
     private Runnable runnable=new Runnable(){
         @Override
         public void run() {
-            // TODO Auto-generated method stub
 
             //更新訂單
-            //GV.refreshShop(nCore);
-            final Gson gson = new Gson();
-            final Refresh refresh = new Refresh();
+            //判斷查詢的方式
+            if(GV.flag == "all") {
+                nCore.shop_FindAll();
+            }
+            else if(GV.flag == "takeout&done"){
 
-            nCore.shop_FindAll();
+            }
+            else if(GV.flag == "takeout&not_done"){
+
+            }
+
             nCore.setCallback(new Network_core.netCallback() {
                 @Override
                 public String response(String response) {
-                    ArrayList<ShoppingItem> shoppingItems = gson.fromJson(response, new TypeToken<List<ShoppingItem>>(){}.getType());
-                    int i;
-                    int sItem_size = GV.sItem.size(), shop_size = shoppingItems.size();
-
-                    if(GV.sItem.size() == 0) {
-                        old_response = response;
-                        for(i = 0;i < shop_size;i++){
-                            if(shop_size != shoppingItems.size()){
-                                i = 0;
-                                shop_size = shoppingItems.size();
-                                continue;
-                            }
-                            refresh.add(shoppingItems.get(i).get_id(), shoppingItems.get(i).getsUserEmail(),
-                                    shoppingItems.get(i).getTabNumber(), shoppingItems.get(i).getsProductItem(), shoppingItems.get(i).getsDate(),
-                                    shoppingItems.get(i).issIsCoupon(),shoppingItems.get(i).getsCoupon());
-                        }
+                    if (GV.isFresh) {
+                        refreshCore(response);
                     }
-                    else {
-                        if(response.equals(old_response)){
-                            for(i = 0; i < shop_size; i++) {
-                                if(shop_size != shoppingItems.size()){
-                                    i = 0;
-                                    shop_size = shoppingItems.size();
-                                    continue;
-                                }
-                                if (GV.sItem.get(i).getsProductItem().size() != shoppingItems.get(i).getsProductItem().size()) {
-                                    GV.sItem.get(i).setsProductItem(shoppingItems.get(i).getsProductItem());
-                                }
-                            }
-                        }
-                        else{
-                            if(old_response.length() < response.length()) {
-
-                                for (i = 0; i < shop_size; i++) {
-                                    if(shop_size != shoppingItems.size()){
-                                        i = 0;
-                                        shop_size = shoppingItems.size();
-                                        continue;
-                                    }
-                                    //ShoppingItem DItem = GV.sItem.get(i);
-                                    if (GV.sItem.toString().indexOf(shoppingItems.get(i).get_id().toString()) < 0) {
-                                        refresh.add(shoppingItems.get(i).get_id(), shoppingItems.get(i).getsUserEmail(),
-                                                shoppingItems.get(i).getTabNumber(), shoppingItems.get(i).getsProductItem(), shoppingItems.get(i).getsDate(),
-                                                shoppingItems.get(i).issIsCoupon(),shoppingItems.get(i).getsCoupon());
-                                    }
-
-                                }
-                            }
-                            else if(old_response.length() > response.length()){
-                                for (i = 0; i < GV.sItem.size(); i++) {
-                                    if (shoppingItems.toString().indexOf(GV.sItem.get(i).get_id().toString()) < 0) {
-                                        refresh.remove(i, GV.sItem.size());
-                                    }
-                                }
-                            }
-                            else{
-                                for(i = 0;i < shop_size;i++){
-                                    if(shop_size != shoppingItems.size()){
-                                        i = 0;
-                                        continue;
-                                    }
-                                    if(!GV.sItem.get(i).get_id().toString().equals(shoppingItems.get(i).get_id().toString())){
-                                        refresh.remove(i, GV.sItem.size());
-                                        refresh.add(shoppingItems.get(i).get_id(), shoppingItems.get(i).getsUserEmail(),
-                                                shoppingItems.get(i).getTabNumber(), shoppingItems.get(i).getsProductItem(), shoppingItems.get(i).getsDate(),
-                                                shoppingItems.get(i).issIsCoupon(),shoppingItems.get(i).getsCoupon());
-                                    }
-                                }
-                            }
-                            old_response = response;
-                        }
+                    else{
+                        old_response = "";
                     }
-
-                    GV.mList.getAdapter().notifyDataSetChanged();
-                    GV.mPager.getAdapter().notifyDataSetChanged();
                     return null;
                 }
             });
@@ -180,6 +119,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         actfab1.setOnClickListener(this);
         actfab2.setOnClickListener(this);
+
+        /********Switch Button********/
+        ImageButton switchListBut = (ImageButton) findViewById(R.id.switchButton);
+        switchListBut.setOnClickListener(this);
+
     }
 
     @Override
@@ -266,7 +210,89 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.actionButton_fab2:
                 butact.add(v);
                 break;
+            case R.id.switchButton:
+                butact.switchList(v);
+                break;
         }
+    }
+
+    private void refreshCore(String response){
+
+        final Gson gson = new Gson();
+        final Refresh refresh = new Refresh();
+
+        ArrayList<ShoppingItem> shoppingItems = gson.fromJson(response, new TypeToken<List<ShoppingItem>>() {
+        }.getType());
+        int i;
+        int sItem_size = GV.sItem.size(), shop_size = shoppingItems.size();
+
+        if (GV.sItem.size() == 0) {
+            old_response = response;
+            for (i = 0; i < shop_size; i++) {
+                if (shop_size != shoppingItems.size()) {
+                    i = 0;
+                    shop_size = shoppingItems.size();
+                    continue;
+                }
+                refresh.add(shoppingItems.get(i).get_id(), shoppingItems.get(i).getsUserEmail(),
+                        shoppingItems.get(i).getTabNumber(), shoppingItems.get(i).getsProductItem(), shoppingItems.get(i).getsDate(),
+                        shoppingItems.get(i).issIsCoupon(), shoppingItems.get(i).getsCoupon());
+            }
+        } else {
+            if (response.equals(old_response)) {
+                for (i = 0; i < shop_size; i++) {
+                    if (shop_size != shoppingItems.size()) {
+                        i = 0;
+                        shop_size = shoppingItems.size();
+                        continue;
+                    }
+                    if (GV.sItem.get(i).getsProductItem().size() != shoppingItems.get(i).getsProductItem().size()) {
+                        GV.sItem.get(i).setsProductItem(shoppingItems.get(i).getsProductItem());
+                    }
+                }
+            } else {
+                if (old_response.length() < response.length()) {
+
+                    for (i = 0; i < shop_size; i++) {
+                        if (shop_size != shoppingItems.size()) {
+                            i = 0;
+                            shop_size = shoppingItems.size();
+                            continue;
+                        }
+                        //ShoppingItem DItem = GV.sItem.get(i);
+                        if (GV.sItem.toString().indexOf(shoppingItems.get(i).get_id().toString()) < 0) {
+                            refresh.add(shoppingItems.get(i).get_id(), shoppingItems.get(i).getsUserEmail(),
+                                    shoppingItems.get(i).getTabNumber(), shoppingItems.get(i).getsProductItem(), shoppingItems.get(i).getsDate(),
+                                    shoppingItems.get(i).issIsCoupon(), shoppingItems.get(i).getsCoupon());
+                        }
+
+                    }
+                } else if (old_response.length() > response.length()) {
+                    for (i = 0; i < GV.sItem.size(); i++) {
+                        if (shoppingItems.toString().indexOf(GV.sItem.get(i).get_id().toString()) < 0) {
+                            refresh.remove(i, GV.sItem.size());
+                        }
+                    }
+                } else {
+                    for (i = 0; i < shop_size; i++) {
+                        if (shop_size != shoppingItems.size()) {
+                            i = 0;
+                            continue;
+                        }
+                        if (!GV.sItem.get(i).get_id().toString().equals(shoppingItems.get(i).get_id().toString())) {
+                            refresh.remove(i, GV.sItem.size());
+                            refresh.add(shoppingItems.get(i).get_id(), shoppingItems.get(i).getsUserEmail(),
+                                    shoppingItems.get(i).getTabNumber(), shoppingItems.get(i).getsProductItem(), shoppingItems.get(i).getsDate(),
+                                    shoppingItems.get(i).issIsCoupon(), shoppingItems.get(i).getsCoupon());
+                        }
+                    }
+                }
+                old_response = response;
+            }
+        }
+
+        GV.mList.getAdapter().notifyDataSetChanged();
+        GV.mPager.getAdapter().notifyDataSetChanged();
     }
 
     //===================================================

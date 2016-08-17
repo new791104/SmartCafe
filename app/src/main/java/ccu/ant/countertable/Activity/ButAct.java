@@ -16,9 +16,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.jaredrummler.materialspinner.MaterialSpinner;
 
 import org.w3c.dom.Text;
 
@@ -38,6 +40,73 @@ import me.himanshusoni.quantityview.QuantityView;
  */
 public class ButAct{
     Network_core nCore;
+
+    public void switchList(View v){
+        final Context context = v.getContext();
+        final View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_switchlist, null);
+/*
+        MaterialSpinner spinner_place = (MaterialSpinner) dialogView.findViewById(R.id.switch_spinner_place);
+        spinner_place.setItems("所有", "外帶", "內用", "臨櫃");
+        spinner_place.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
+
+            @Override public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
+                Snackbar.make(view, "Clicked " + item, Snackbar.LENGTH_LONG).show();
+            }
+        });
+
+        MaterialSpinner spinner_isOut = (MaterialSpinner) dialogView.findViewById(R.id.switch_spinner_isOut);
+        spinner_isOut.setItems("出餐", "未出餐");
+        spinner_isOut.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
+
+            @Override public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
+                Snackbar.make(view, "Clicked " + item, Snackbar.LENGTH_LONG).show();
+            }
+        });*/
+
+        Spinner spinner_place = (Spinner) dialogView.findViewById(R.id.switch_spinner_place);
+        //建立一個ArrayAdapter物件，並放置下拉選單的內容
+        ArrayAdapter palce = new ArrayAdapter(context,android.R.layout.simple_spinner_item,new String[]{"所有","外帶","內用","臨櫃"});
+        //設定下拉選單的樣式
+        palce.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_place.setAdapter(palce);
+        //設定項目被選取之後的動作
+        spinner_place.setOnItemSelectedListener(new Spinner.OnItemSelectedListener(){
+            public void onItemSelected(AdapterView adapterView, View view, int position, long id){
+                Toast.makeText(context, "您選擇"+adapterView.getSelectedItem().toString(), Toast.LENGTH_LONG).show();
+            }
+            public void onNothingSelected(AdapterView arg0) {
+                Toast.makeText(context, "您沒有選擇任何項目", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        Spinner spinner_isOut = (Spinner) dialogView.findViewById(R.id.switch_spinner_isOut);
+        //建立一個ArrayAdapter物件，並放置下拉選單的內容
+        ArrayAdapter isOut = new ArrayAdapter(context,android.R.layout.simple_spinner_item,new String[]{"已出餐","未出餐"});
+        //設定下拉選單的樣式
+        isOut.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_isOut.setAdapter(isOut);
+        //設定項目被選取之後的動作
+        spinner_isOut.setOnItemSelectedListener(new Spinner.OnItemSelectedListener(){
+            public void onItemSelected(AdapterView adapterView, View view, int position, long id){
+                Toast.makeText(context, "您選擇"+adapterView.getSelectedItem().toString(), Toast.LENGTH_LONG).show();
+            }
+            public void onNothingSelected(AdapterView arg0) {
+                Toast.makeText(context, "您沒有選擇任何項目", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        AlertDialog dlg = new AlertDialog.Builder(context)
+                .setTitle("排序方式")   //dialog title
+                .setView(dialogView)
+                .setPositiveButton("確認", new DialogInterface.OnClickListener() { //dialog 按鈕
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                })
+                .show();
+        //setDialogWindowAttr(dlg,context,600,600);
+
+    }
 
     public void add(View v) {
         final Context context = v.getContext();

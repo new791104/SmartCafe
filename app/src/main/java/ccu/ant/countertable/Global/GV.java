@@ -29,6 +29,7 @@ public class GV {
 
     public static String old_response;
     public static RecyclerView mList;
+
     //Fragment
     //public static VerticalViewPager mPager;
     public static ViewPager mPager;
@@ -36,39 +37,11 @@ public class GV {
     public static int NOW_POS;
     public static int number = 0;
     public static List<Integer> now_finish = new ArrayList<Integer>();
+
     //Fragment裡面的List，用來顯示餐點項目
     public static List<RecyclerView> sList = new ArrayList<RecyclerView>();
-/*
-    public static void refreshShop(Network_core nCore){
-        final String[] response_local = {new String("")};
 
-        final Gson gson = new Gson();
-        nCore.shop_FindAll();
-        nCore.setCallback(new Network_core.netCallback() {
-            @Override
-            public String response(String response) {
-                response_local[0] = response;
-                ArrayList<ShoppingItem> shoppingItems = gson.fromJson(response_local[0], new TypeToken<List<ShoppingItem>>(){}.getType());
-
-                if(GV.sItem.size() == 0) {
-                    for(int i = 0;i < shoppingItems.size();i++)
-                        GV.sItem.add(shoppingItems.get(i));
-                    Log.e("test12","in");
-                }
-                else {
-                    for (int i = 0; i < GV.sItem.size(); i++) {
-                        if (shoppingItems.indexOf(GV.sItem.get(i).get_id()) < 0) {
-                            GV.sItem.add(shoppingItems.get(i));
-                        }
-                    }
-                }
-
-                GV.mList.getAdapter().notifyDataSetChanged();
-                GV.mPager.getAdapter().notifyDataSetChanged();
-                return null;
-            }
-        });
-
-    }
-    */
+    //flag, 異步調用控制
+    public static String flag = "all";
+    public static boolean isFresh = true;
 }
